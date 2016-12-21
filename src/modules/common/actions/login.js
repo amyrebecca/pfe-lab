@@ -1,5 +1,5 @@
 import oauth from 'panoptes-client/lib/oauth';
-import * as types from '../../../constants/actionTypes';
+import * as types from 'constants/actionTypes';
 
 export function setLoginUser(user) {
   return (dispatch) => {

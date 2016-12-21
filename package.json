@@ -23,8 +23,8 @@
   ],
   "scripts": {
     "start": "babel-node server.js",
-    "test": "mocha",
-    "eslint": "eslint .",
+    "test": "env NODE_PATH=$NODE_PATH:$PWD/src mocha",
+    "eslint": "eslint --debug .",
     "build": "webpack --config webpack.production.config.js -p"
   },
   "author": "Zooniverse",
@@ -59,6 +59,7 @@
     "css-loader": "^0.26.1",
     "eslint": "^3.11.1",
     "eslint-config-airbnb": "^13.0.0",
+    "eslint-import-resolver-webpack": "^0.8.0",
     "eslint-loader": "^1.6.1",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
