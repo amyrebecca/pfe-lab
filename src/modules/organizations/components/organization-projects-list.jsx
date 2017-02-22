@@ -9,7 +9,7 @@ const OrganizationProjectsList = ({ projects, onRemove }) => {
     return (<div><h3>Organization Projects</h3><p>No projects associated with this organization</p></div>);
   }
 
-  const sorted = projects.sort((a, b) => a.display_name > b.display_name);
+  const sorted = projects.sort((a, b) => a.display_name.toLowerCase() > b.display_name.toLowerCase());
 
   return (
     <div className="organization-projects-list">
