@@ -7,25 +7,48 @@ import { projectsShape } from '../../projects/model';
 import OrganizationProjectsList from '../components/organization-projects-list';
 import OrganizationAddProject from '../components/organization-add-project';
 
-import { addOrganizationProject } from '../action-creators';
+import { addOrganizationProject, setOrganizationProjects } from '../action-creators';
 
 class VisibilityContainer extends React.Component {
 
   constructor(props) {
     super(props);
 
+    this.state = {
+      projectToAdd: { value: '', label: '' },
+    };
+
     this.addProject = this.addProject.bind(this);
+    this.changeSelectedProject = this.changeSelectedProject.bind(this);
   }
 
-  addProject(project) {
-    this.props.dispatch(addOrganizationProject(project));
+  componentDidMount() {
+    apiClient.type('organizations').get(this.props.organizationId).get('projects').then((projects) => {
+      this.props.dispatch(setOrganizationProjects(projects));
+    });
+  }
+
+  addProject() {
+    const id = this.state.projectToAdd.value;
+    apiClient.type('organizations')
+      .get(this.props.organizationId)
+      .addLink('projects', [id]);
+      // .then(() => { this.props.dispatch(addOrganizationProject(project)); });
+  }
+
+  changeSelectedProject(params) {
+    this.setState({ projectToAdd: params });
   }
 
   render() {
     return (
       <div>
         <OrganizationProjectsList projects={this.props.organizationProjects} />
-        <OrganizationAddProject onAdd={this.addProject} />
+        <OrganizationAddProject
+          value={this.state.projectToAdd.value}
+          onChange={this.changeSelectedProject}
+          onAdd={this.addProject}
+        />
       </div>
     );
   }
@@ -33,11 +56,13 @@ class VisibilityContainer extends React.Component {
 
 VisibilityContainer.propTypes = {
   dispatch: React.PropTypes.func,
+  organizationId: React.PropTypes.string,
   organizationProjects: projectsShape,
 };
 
 function mapStateToProps(state) {
   return {
+    organization: state.organization,
     organizationProjects: state.organizationProjects,
   };
 }

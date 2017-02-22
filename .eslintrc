@@ -26,6 +26,7 @@
     "quote-props": 0,
     "react/prefer-stateless-function": [1],
     "react/jsx-no-bind": "off",
+    "react/jsx-boolean-value": "off",
     "keyword-spacing": 2,
     "no-console": 1,
     // specify the maximum length of a line in your program
