@@ -4,8 +4,10 @@ import { organizationShape } from '../model';
 
 import bindInput from '../../common/containers/bind-input';
 import FormContainer from '../../common/containers/form-container';
+import SectionTitle from '../../common/components/section-title';
 
 const EditDetails = ({ organization, updateOrganization, resetOrganization }) => {
+  // TODO: ARB: this should be broken up into a container and some components
   if (!organization) {
     return (
       <div>Loading...</div>
@@ -36,12 +38,12 @@ const EditDetails = ({ organization, updateOrganization, resetOrganization }) =>
 
   return (
     <div>
-      <h2>{organization.display_name}</h2>
-      <p><small>You are editing this organization</small></p>
+      <SectionTitle message="Edit Organization Details" />
       <FormContainer onSubmit={onSubmit} onReset={onReset}>
         <label>
           Name: <NameInput withRef={(n) => { fields.display_name = n; }} />
         </label>
+        <br />
         <label>
           Description: <DescriptionInput withRef={(n) => { fields.description = n; }} />
         </label>

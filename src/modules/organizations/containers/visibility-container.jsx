@@ -6,6 +6,7 @@ import { projectsShape } from '../../projects/model';
 
 import OrganizationProjectsList from '../components/organization-projects-list';
 import OrganizationAddProject from '../components/organization-add-project';
+import SectionTitle from '../../common/components/section-title';
 
 import { addOrganizationProject, removeOrganizationProject, setOrganizationProjects } from '../action-creators';
 
@@ -54,6 +55,7 @@ class VisibilityContainer extends React.Component {
   render() {
     return (
       <div>
+        <SectionTitle message="Affiliated Projects" />
         <OrganizationProjectsList
           projects={this.props.organizationProjects}
           onRemove={this.removeProject}

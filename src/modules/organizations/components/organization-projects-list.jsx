@@ -13,7 +13,6 @@ const OrganizationProjectsList = ({ projects, onRemove }) => {
 
   return (
     <div className="organization-projects-list">
-      <h4>Organization Projects</h4>
       <ul>
         {sorted.map(proj => (
           <OrganizationProjectItem key={proj.id} project={proj} onRemove={onRemove} />

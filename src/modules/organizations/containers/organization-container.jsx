@@ -5,11 +5,15 @@ import apiClient from 'panoptes-client/lib/api-client';
 import { organizationShape } from '../model';
 import { setCurrentOrganization } from '../action-creators';
 
+import MainTitle from '../../common/components/main-title';
+
 class OrganizationContainer extends React.Component {
   constructor(props) {
     super(props);
 
     this.fetchOrganization(props.params.id);
+
+    this.organizationName = this.organizationName.bind(this);
     this.resetOrganization = this.resetOrganization.bind(this);
     this.updateOrganization = this.updateOrganization.bind(this);
   }
@@ -44,6 +48,14 @@ class OrganizationContainer extends React.Component {
       });
   }
 
+  organizationName() {
+    if (this.props.organization) {
+      return this.props.organization.display_name;
+    }
+
+    return '';
+  }
+
   render() {
     const children = this.props.children; // eslint-disable-line react/prop-types
     const organization = this.props.organization;
@@ -59,7 +71,12 @@ class OrganizationContainer extends React.Component {
       }),
     );
 
-    return (<div> {wrappedChildren} </div>);
+    return (
+      <div>
+        <MainTitle message={`Organization: ${this.organizationName()}`} />
+        {wrappedChildren}
+      </div>
+    );
   }
 }
 
