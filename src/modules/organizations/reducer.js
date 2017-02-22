@@ -14,9 +14,9 @@ export default function (state = initialState, action) { // eslint-disable-line 
     case types.SET_ORGANIZATION_PROJECTS:
       return { organizationProjects: action.projects };
     case types.ADD_ORGANIZATION_PROJECT:
-      return { organizationProjects: (state.organizationProject || []).concat([action.project]) };
+      return { organizationProjects: (state.organizationProjects || []).concat([action.project]) };
     case types.REMOVE_ORGANIZATION_PROJECT:
-      return { organizationProjects: (state.organizationProjects || []).filter(p => p.id !== action.project.id) };
+      return { organizationProjects: (state.organizationProjects || []).filter(p => p.id !== action.projectId) };
     default:
       return state;
   }

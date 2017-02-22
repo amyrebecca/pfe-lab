@@ -7,7 +7,7 @@ import { projectsShape } from '../../projects/model';
 import OrganizationProjectsList from '../components/organization-projects-list';
 import OrganizationAddProject from '../components/organization-add-project';
 
-import { addOrganizationProject, setOrganizationProjects } from '../action-creators';
+import { addOrganizationProject, removeOrganizationProject, setOrganizationProjects } from '../action-creators';
 
 class VisibilityContainer extends React.Component {
 
@@ -20,6 +20,7 @@ class VisibilityContainer extends React.Component {
 
     this.addProject = this.addProject.bind(this);
     this.changeSelectedProject = this.changeSelectedProject.bind(this);
+    this.removeProject = this.removeProject.bind(this);
   }
 
   componentDidMount() {
@@ -32,8 +33,18 @@ class VisibilityContainer extends React.Component {
     const id = this.state.projectToAdd.value;
     apiClient.type('organizations')
       .get(this.props.organizationId)
-      .addLink('projects', [id]);
-      // .then(() => { this.props.dispatch(addOrganizationProject(project)); });
+      .addLink('projects', [id])
+      .then(() => apiClient.type('projects').get(id))
+      .then((project) => {
+        this.props.dispatch(addOrganizationProject(project));
+      });
+  }
+
+  removeProject(id) {
+    apiClient.type('organizations')
+      .get(this.props.organizationId)
+      .removeLink('projects', [id])
+      .then(() => this.props.dispatch(removeOrganizationProject(id)));
   }
 
   changeSelectedProject(params) {
@@ -43,7 +54,10 @@ class VisibilityContainer extends React.Component {
   render() {
     return (
       <div>
-        <OrganizationProjectsList projects={this.props.organizationProjects} />
+        <OrganizationProjectsList
+          projects={this.props.organizationProjects}
+          onRemove={this.removeProject}
+        />
         <OrganizationAddProject
           value={this.state.projectToAdd.value}
           onChange={this.changeSelectedProject}

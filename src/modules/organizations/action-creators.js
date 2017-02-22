@@ -42,9 +42,9 @@ export function addOrganizationProject(project) {
   };
 }
 
-export function removeOrganizationProject(project) {
+export function removeOrganizationProject(projectId) {
   return {
     type: types.REMOVE_ORGANIZATION_PROJECT,
-    project,
+    projectId,
   };
 }
